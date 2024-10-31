@@ -1,0 +1,46 @@
+<div *ngIf="materialData">
+  <div class="mt-data">
+    <h3>Material: {{ materialData.material }}</h3>
+    <h3>Supplier: {{ materialData.supplier }}</h3>
+    <h3>Quantity: {{ materialData.quantity }}</h3>
+
+  </div>
+  
+  <div class="batch-container">
+    <form (ngSubmit)="addBatch()" #batchForm="ngForm" id="batchform" style="display: block;">
+      <div>
+        <label for="batchNo">Batch No:</label>
+        <input type="text" id="batchNo" name="batchNo" [(ngModel)]="batchData.batchNo" required>
+      </div>
+
+      <div>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" [(ngModel)]="batchData.quantity" required min="1">
+      </div>
+
+      <button type="submit" [disabled]="!batchForm.form.valid">Save Batch</button>
+    </form>
+
+    <table *ngIf="batches.length > 0">
+      <thead>
+        <tr>
+          <th>Batch No</th>
+          <th>Quantity</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let batch of batches; let i = index">
+          <td>{{ batch.batchNo }}</td>
+          <td>{{ batch.quantity }}</td>
+          <td>
+            <button type="button" (click)="selectBatch(batch)">Add Packs</button>
+            <button type="button" (click)="deleteBatch(i)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-packs *ngIf="selectedBatch" [batch]="selectedBatch"></app-packs>

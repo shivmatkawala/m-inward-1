@@ -1,0 +1,80 @@
+<div *ngIf="batch" id="packform" class="pack-form-container">
+  <form (ngSubmit)="onSubmit()" #packsForm="ngForm" *ngIf="formVisible">
+    <h2>Packs for Batch: {{ batch?.batchNo }}</h2>
+    <div>
+      <label for="numberOfPacks">Number of Packs:</label>
+      <input
+        type="number"
+        id="numberOfPacks"
+        name="numberOfPacks"
+        [(ngModel)]="numberOfPacks"
+        (ngModelChange)="createPacksArray()"
+        required
+        min="1"
+      />
+    </div>
+
+    <table *ngIf="packs.length > 0">
+      <thead>
+        <tr>
+          <th>Pack No</th>
+          <th>Gross Weight</th>
+          <th>Tare Weight</th>
+          <th>Net Weight</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pack of packs; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>
+            <input
+              type="number"
+              [(ngModel)]="pack.grossWeight"
+              name="grossWeight-{{ i }}"
+              (ngModelChange)="updateNetWeight(pack)"
+              required
+              min="0"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              [(ngModel)]="pack.tareWeight"
+              name="tareWeight-{{ i }}"
+              (ngModelChange)="updateNetWeight(pack)"
+              required
+              min="0"
+            />
+          </td>
+          <td>{{ pack.netWeight }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button type="submit" [disabled]="totalNetWeight !== batch?.quantity">
+      Submit Packs
+    </button>
+  </form>
+
+  <div *ngIf="packList.length > 0" class="table-pack dumb-table">
+    <h3>Packs for Batch: {{ batch?.batchNo }}</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Pack No</th>
+          <th>Gross Weight</th>
+          <th>Tare Weight</th>
+          <th>Net Weight</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pack of packList; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ pack.grossWeight }}</td>
+          <td>{{ pack.tareWeight }}</td>
+          <td>{{ pack.netWeight }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

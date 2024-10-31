@@ -1,0 +1,25 @@
+<!-- material-form.component.html -->
+<div *ngIf="isVisible">
+  <form (ngSubmit)="onSubmit()" #materialForm="ngForm">
+    <div>
+      <label for="material">Material:</label>
+      <select id="material" name="material" [(ngModel)]="formData.material" required>
+        <option *ngFor="let material of materials" [value]="material">{{ material }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="supplier">Supplier:</label>
+      <select id="supplier" name="supplier" [(ngModel)]="formData.supplier" required>
+        <option *ngFor="let supplier of suppliers" [value]="supplier">{{ supplier }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" name="quantity" [(ngModel)]="formData.quantity" required>
+    </div>
+
+    <button type="submit" [disabled]="!materialForm.form.valid">Submit</button>
+  </form>
+</div>

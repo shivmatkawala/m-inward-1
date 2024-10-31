@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+/* Remove spinners from number input fields */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
